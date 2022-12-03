@@ -135,12 +135,13 @@
 
         // change info window on hover
         map.on('mousemove', (event) => {
-          const states = map.queryRenderedFeatures(event.point, {
-            layers: ['statedata']
+          const precinct = map.queryRenderedFeatures(event.point, {
+            layers: ['measures-precincts']
           });
-          document.getElementById('pd').innerHTML = states.length
-            ? `<h3>${states[0].properties.name}</h3><p><strong><em>${states[0].properties.density}</strong> people per square mile</em></p>`
-            : `<p>Hover over a state!</p>`;
+          console.log(document.getElementById('pd').innerHTML)
+          document.getElementById('pd').innerHTML = precinct.length
+            ? `<h3>${precinct[0].properties.Combined_Precincts_Field2}</h3><p><strong><em>${precinct[0].properties.Sheet1_Field4}</strong> % of No Votes</em></p>`
+            : `<p>Hover over a precinct</p>`;
         });
       });
     </script>
