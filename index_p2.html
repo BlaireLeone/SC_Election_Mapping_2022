@@ -45,7 +45,7 @@
         top: 0;
         height: 100px;
         margin-top: 20px;
-        width: 250px;
+        width: 310px;
       }
       #legend {
         padding: 10px;
@@ -67,7 +67,7 @@
   <body>
     <div id="map"></div>
     <div class="map-overlay" id="features">
-      <h2>Measure O Election Map 2022</h2>
+      <h2>Measure O Election Results 2022</h2>
       <div id="pd"><p>Hover over a precinct</p></div>
     </div>
     <div class="map-overlay" id="legend"></div>
@@ -79,7 +79,7 @@
       // create map
       const map = new mapboxgl.Map({
         container: 'map', // container id
-        style: 'mapbox://styles/blaireleone/clb49x77w000615o9422ww8zn', // map style URL from Mapbox Studio
+        style: 'mapbox://styles/blaireleone/clb7cylq1000315nub6nedvpp', // map style URL from Mapbox Studio
         //center: [36.97283, -122.012215], // starting position [lng, lat]
         //zoom: 9, // starting zoom
       });
@@ -136,12 +136,14 @@
         // change info window on hover
         map.on('mousemove', (event) => {
           const precinct = map.queryRenderedFeatures(event.point, {
-            layers: ['measures-precincts']
+            layers: ['measures-combined-precincts-b1hs9p']
           });
-          console.log(document.getElementById('pd').innerHTML)
+          console.log(precinct)
           document.getElementById('pd').innerHTML = precinct.length
-            ? `<h3>${precinct[0].properties.Combined_Precincts_Field2}</h3><p><strong><em>${precinct[0].properties.Sheet1_Field4}</strong> % of No Votes</em></p>`
-            : `<p>Hover over a precinct</p>`;
+            // ? `</h3><p><strong><em>${precinct[0].properties.Sheet1_Field6}%</strong> of No Votes</em></p><h3><strong>${precinct[0].properties.Sheet1_Field2}</strong> Total Votes`
+          ? `</h3><p><strong><em>${precinct[0].properties["Percent No Votes"]}%</strong> of No Votes</em></p><h3><strong><em>${precinct[0].properties["Total Votes"]}</strong> Total Votes</em>`
+            
+              : `<p>Hover over a precinct</p>`;
         });
       });
     </script>
