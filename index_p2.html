@@ -1,6 +1,6 @@
 <iframe 
   width='100%' 
-  height='350px'      
+  height='380px'      
   src="https://api.mapbox.com/styles/v1/blaireleone/clb7ihumu000c15paygyf4d3j.html?title=false&access_token=pk.eyJ1IjoiYmxhaXJlbGVvbmUiLCJhIjoiY2xiMWR1NGZkMDc0cTNwcWZ2OGNib2hvOCJ9.C4dyqxXx0I6lmVRK_HdmMQ&zoomwheel=false#12.03/36.98719/-122.00858" 
     title="Measure N Election Results-linear colors" 
     style="border:none;"></iframe>
@@ -109,10 +109,12 @@
         const layers = [
           '<strong>No:</strong> 54.03% (13112)', 
           '<strong>Yes:</strong> 45.97% (11154)',
+          'Indicates 10 or Fewer Registered Voters',
         ];
         const colors = [
           '#d115b1',
           '#13b916',
+          '#7d7878',
         ];
 
         // create legend
@@ -135,13 +137,19 @@
         // change info window on hover
         map.on('mousemove', (event) => {
           const precinct = map.queryRenderedFeatures(event.point, {
-            layers: ['measures-combined-precincts-b1hs9p']
+            layers: ['precints-for-measures-with-ov-9z123k']
           });
           console.log(precinct)
-          document.getElementById('pd').innerHTML = precinct.length
-          ? `</h3><p><strong><em>${precinct[0].properties["Percent No Votes"]}%</strong> No Votes </em><strong><em>(${precinct[0].properties["Total Votes"]}</strong>)</em></p>`
-            
-              :'<p>Precinct Level Results</p>';
+          // document.getElementById('pd').innerHTML = precinct.length
+          // ? `</h3><p><strong><em>${precinct[0].properties["Percent No Votes"]}%</strong> No </em><strong><em>(${precinct[0].properties["Total Votes"]}</strong>)</em></p>`
+          //     :'<p>Precinct Level Results</p>';
+          if (! precinct.length){
+            document.getElementById('pd').innerHTML = '<p>Precinct Level Results</p>'
+          } else if (precinct.length && precinct[0].properties["Total Votes"] < 10) {
+            document.getElementById('pd').innerHTML = 'Results omitted: Had 10 or fewer registered voters'
+          } else {
+            document.getElementById('pd').innerHTML = `</h3><p><strong><em>${precinct[0].properties["Percent No Votes"]}%</strong> No </em><strong><em>(${precinct[0].properties["Total Votes"]}</strong>)</em></p>`
+          }
         });
       });
     </script>
