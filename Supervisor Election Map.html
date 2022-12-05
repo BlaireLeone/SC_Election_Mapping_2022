@@ -130,7 +130,7 @@
           const precinct = map.queryRenderedFeatures(event.point, {
             layers: ['3rd-supervisorial-district-4wseev']
           });
-          console.log(precinct[0].properties["Total"])
+          console.log(map.getStyle())
           if (! precinct.length){
             document.getElementById('pd').innerHTML = '<p>Precinct Level Results</p>'
           } else if (precinct.length && precinct[0].properties["Total"] == null) {
