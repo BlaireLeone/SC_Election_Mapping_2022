@@ -1,15 +1,8 @@
-<!-- <iframe 
-  width='100%' 
-  height='380px'      
-  src="https://api.mapbox.com/styles/v1/blaireleone/clb7ihumu000c15paygyf4d3j.html?title=false&access_token=pk.eyJ1IjoiYmxhaXJlbGVvbmUiLCJhIjoiY2xiMWR1NGZkMDc0cTNwcWZ2OGNib2hvOCJ9.C4dyqxXx0I6lmVRK_HdmMQ&zoomwheel=false#12.03/36.98719/-122.00858" 
-    title="Measure N Election Results-linear colors" 
-    style="border:none;"></iframe> -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Measure N Election Map 2022</title>
+    <title>Measure O Election Map 2022</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
     <link
@@ -90,7 +83,7 @@
       // create map
       const map = new mapboxgl.Map({
         container: 'map', // container id
-        style: 'mapbox://styles/blaireleone/clb7ihumu000c15paygyf4d3j', // map style URL from Mapbox Studio
+        style: 'mapbox://styles/blaireleone/clb9y4miu001y14t4ivtjr7ef', // map style URL from Mapbox Studio
         center: [-122.035000, 36.97800], // starting position [lng, lat]
         zoom: 12, // starting zoom
       });
@@ -135,18 +128,15 @@
         // change info window on hover
         map.on('mousemove', (event) => {
           const precinct = map.queryRenderedFeatures(event.point, {
-            layers: ['precints-for-measures-with-ov-9z123k']
+            layers: ['measure-o-precinct-map-ba5mgr']
           });
           console.log(precinct)
-          // document.getElementById('pd').innerHTML = precinct.length
-          // ? `</h3><p><strong><em>${precinct[0].properties["Percent No Votes"]}%</strong> No </em><strong><em>(${precinct[0].properties["Total Votes"]}</strong>)</em></p>`
-          //     :'<p>Precinct Level Results</p>';
           if (! precinct.length){
             document.getElementById('pd').innerHTML = '<p>Precinct Level Results</p>'
-          } else if (precinct.length && precinct[0].properties["Total Votes"] < 10) {
+          } else if (precinct.length && precinct[0].properties["Measure O_Total"] < 10) {
             document.getElementById('pd').innerHTML = '<p>Precinct had 10 or fewer votes cast</p>'
           } else {
-            document.getElementById('pd').innerHTML = `</h3><p><strong><em>No:</strong> ${precinct[0].properties["Percent No Votes"]}%</strong></em><em> (${precinct[0].properties["Total Votes"]})</em></p>`
+            document.getElementById('pd').innerHTML = `</h3><p><strong><em>No:</strong> ${precinct[0].properties["Measure O_Percent No"]}%</strong></em><em> (${precinct[0].properties["Measure O_Total"]})</em></p>`
           }
         });
       });
