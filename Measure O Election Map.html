@@ -1,3 +1,11 @@
+<!-- <iframe 
+  width='100%' 
+  height='380px'      
+  src="https://api.mapbox.com/styles/v1/blaireleone/clb7ihumu000c15paygyf4d3j.html?title=false&access_token=pk.eyJ1IjoiYmxhaXJlbGVvbmUiLCJhIjoiY2xiMWR1NGZkMDc0cTNwcWZ2OGNib2hvOCJ9.C4dyqxXx0I6lmVRK_HdmMQ&zoomwheel=false#12.03/36.98719/-122.00858" 
+    title="Measure N Election Results-linear colors" 
+    style="border:none;"></iframe> -->
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -71,7 +79,7 @@
   <body>
     <div id="map"></div>
     <div class="map-overlay" id="features">
-      <h2>Measure N Election Map 2022</h2>
+      <h2>Measure O Election Map 2022</h2>
       <div id="pd"><p>   Precinct Level Results</p></div>
     </div>
     <div class="map-overlay" id="legend"></div>
@@ -100,8 +108,8 @@
 
         // define layer names
         const layers = [
-          '<strong>No:</strong> 54.03% (13112)', 
-          '<strong>Yes:</strong> 45.97% (11154)',
+          '<strong>No:</strong> 59.52% (14145)', 
+          '<strong>Yes:</strong> 40.48% (9622)',
         ];
         const colors = [
           '#d115b1',
@@ -130,10 +138,10 @@
           const precinct = map.queryRenderedFeatures(event.point, {
             layers: ['measure-o-precinct-map-ba5mgr']
           });
-          console.log(precinct)
+          console.log(precinct[0].properties["Measure O_Total"])
           if (! precinct.length){
             document.getElementById('pd').innerHTML = '<p>Precinct Level Results</p>'
-          } else if (precinct.length && precinct[0].properties["Measure O_Total"] < 10) {
+          } else if (precinct.length && precinct[0].properties["Measure O_Total"] == null) {
             document.getElementById('pd').innerHTML = '<p>Precinct had 10 or fewer votes cast</p>'
           } else {
             document.getElementById('pd').innerHTML = `</h3><p><strong><em>No:</strong> ${precinct[0].properties["Measure O_Percent No"]}%</strong></em><em> (${precinct[0].properties["Measure O_Total"]})</em></p>`
@@ -143,4 +151,3 @@
     </script>
   </body>
 </html>
-
