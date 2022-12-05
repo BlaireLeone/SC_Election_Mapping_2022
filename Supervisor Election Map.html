@@ -1,8 +1,10 @@
+<iframe width='100%' height='450px' src="https://api.mapbox.com/styles/v1/blaireleone/clbaah7z7000l14s2rw2j1zku.html?title=false&access_token=pk.eyJ1IjoiYmxhaXJlbGVvbmUiLCJhIjoiY2xiMWR1NGZkMDc0cTNwcWZ2OGNib2hvOCJ9.C4dyqxXx0I6lmVRK_HdmMQ&zoomwheel=false#10.25/37.0771/-122.1207" title="Supervisor 3 Election Map" style="border:none;"></iframe>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Measure O Election Map 2022</title>
+    <title>3rd Supervisorial District Election Map 2022</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
     <link
@@ -44,20 +46,20 @@
       }
       #features {
         top: 0;
-        height: 100px;
+        height: 120px;
         margin-top: 20px;
-        width: 340px;
+        width: 380px;
       }
       #legend {
         position: relative;
         top: 50%;
-        left: 50%;
+        left: 10%;
         padding: 10px;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         line-height: 25px;
         height: 70px;
         margin-bottom: 40px;
-        width: 220px;
+        width: 250px;
       }
       .legend-key {
         display: inline-block;
@@ -71,7 +73,7 @@
   <body>
     <div id="map"></div>
     <div class="map-overlay" id="features">
-      <h2>Measure O Election Map 2022</h2>
+      <h2>3rd Supervisorial District Election Map 2022</h2>
       <div id="pd"><p>   Precinct Level Results</p></div>
     </div>
     <div class="map-overlay" id="legend"></div>
@@ -84,7 +86,7 @@
       const map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/blaireleone/clbaah7z7000l14s2rw2j1zku', // map style URL from Mapbox Studio
-        center: [-122.0475389, 37.1001741], // starting position [lng, lat]
+        center: [-122.1385389, 37.1001741], // starting position [lng, lat]
         zoom: 10, // starting zoom
       });
 
@@ -100,8 +102,8 @@
 
         // define layer names
         const layers = [
-        '<strong>Justin:</strong> 48.17% (10312)',  
-        '<strong>Shebreh:</strong> 51.02% (9736)', 
+        '<strong>Justin:</strong> 51.02% (10312)',  
+        '<strong>Shebreh:</strong> 48.17% (9736)', 
         ];
         const colors = [
         '#13b916',  

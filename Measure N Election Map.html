@@ -144,7 +144,7 @@
           if (! precinct.length){
             document.getElementById('pd').innerHTML = '<p>Precinct Level Results</p>'
           } else if (precinct.length && precinct[0].properties["Total Votes"] < 10) {
-            document.getElementById('pd').innerHTML = '<p>Precinct had 10 or fewer votes cast</p>'
+            document.getElementById('pd').innerHTML = '<p>Insufficient Votes</p>'
           } else {
             document.getElementById('pd').innerHTML = `</h3><p><strong><em>No:</strong> ${precinct[0].properties["Percent No Votes"]}%</strong></em><em> (${precinct[0].properties["Total Votes"]})</em></p>`
           }
