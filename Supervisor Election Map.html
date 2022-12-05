@@ -131,6 +131,8 @@
             layers: ['3rd-supervisorial-district-4wseev']
           });
           console.log(map.getStyle())
+          console.log(event)
+        
           if (! precinct.length){
             document.getElementById('pd').innerHTML = '<p>Precinct Level Results</p>'
           } else if (precinct.length && precinct[0].properties["Total"] == null) {
