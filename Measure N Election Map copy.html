@@ -1,0 +1,156 @@
+<!-- <iframe 
+  width='100%' 
+  height='380px'      
+  src="https://api.mapbox.com/styles/v1/blaireleone/clb7ihumu000c15paygyf4d3j.html?title=false&access_token=pk.eyJ1IjoiYmxhaXJlbGVvbmUiLCJhIjoiY2xiMWR1NGZkMDc0cTNwcWZ2OGNib2hvOCJ9.C4dyqxXx0I6lmVRK_HdmMQ&zoomwheel=false#12.03/36.98719/-122.00858" 
+    title="Measure N Election Results-linear colors" 
+    style="border:none;"></iframe> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Measure N Election Map 2022</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      h2,
+      h3 {
+        margin: 10px;
+        font-size: 18px;
+      }
+      h3 {
+        font-size: 16px;
+      }
+      p {
+        margin: 10px;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 60%;
+      }
+        .map-overlay {
+        position: absolute;
+        top: auto;
+        left: auto;
+        background: #fff;
+        margin-left: 10px;
+        margin-top: 10px;
+        font-family: Arial, sans-serif;
+        overflow: auto;
+        border-radius: 3px;
+      }
+      #features {
+        top: 0;
+        height: 100px;
+        margin-top: 20px;
+        width: 340px;
+      }
+      #legend {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        padding: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        line-height: 25px;
+        height: 70px;
+        margin-bottom: 40px;
+        width: 220px;
+      }
+      .legend-key {
+        display: inline-block;
+        border-radius: 20%;
+        width: 10px;
+        height: 10px;
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div class="map-overlay" id="features">
+      <h2>Measure N Election Map 2022</h2>
+      <div id="pd"><p>   Precinct Level Results</p></div>
+    </div>
+    <div class="map-overlay" id="legend"></div>
+
+    <script>
+      // define access token
+      mapboxgl.accessToken = 'pk.eyJ1IjoiYmxhaXJlbGVvbmUiLCJhIjoiY2xiMWR1NGZkMDc0cTNwcWZ2OGNib2hvOCJ9.C4dyqxXx0I6lmVRK_HdmMQ';
+
+      // create map
+      const map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/blaireleone/clbbf3z9a000815n2umwx4dt1', // map style URL from Mapbox Studio
+        center: [-122.035000, 36.97800], // starting position [lng, lat]
+        zoom: 12, // starting zoom
+      });
+
+      // wait for map to load before adjusting it
+      map.on('load', () => {
+        // make a pointer cursor
+        map.getCanvas().style.cursor = 'default';
+
+        // set map bounds to the continental US
+        //map.fitBounds([
+          //[6145000, 6103800],
+          //[1808684.8842604, 1826070.84423906] ]);
+
+        // define layer names
+        const layers = [
+          '<strong>No:</strong> 54.03% (13112)', 
+          '<strong>Yes:</strong> 45.97% (11154)',
+        ];
+        const colors = [
+          '#d115b1',
+          '#13b916',
+        ];
+
+        // create legend
+        const legend = document.getElementById('legend');
+
+        layers.forEach((layer, i) => {
+          const color = colors[i];
+          const item = document.createElement('div');
+          const key = document.createElement('span');
+          key.className = 'legend-key';
+          key.style.backgroundColor = color;
+
+          const value = document.createElement('span');
+          value.innerHTML = `${layer}`;
+          item.appendChild(key);
+          item.appendChild(value);
+          legend.appendChild(item);
+        });
+
+        // change info window on hover
+        map.on('mousemove', (event) => {
+          const precinct = map.queryRenderedFeatures(event.point, {
+            layers: ['updated-measure-n-map-32kozg']
+          });
+          console.log(precinct)
+          // document.getElementById('pd').innerHTML = precinct.length
+          // ? `</h3><p><strong><em>${precinct[0].properties["Percent No Votes"]}%</strong> No </em><strong><em>(${precinct[0].properties["Total Votes"]}</strong>)</em></p>`
+          //     :'<p>Precinct Level Results</p>';
+          if (! precinct.length){
+            document.getElementById('pd').innerHTML = '<p>Precinct Level Results</p>'
+          } else if (precinct.length && precinct[0].properties["Total Field"] == null) {
+            document.getElementById('pd').innerHTML = '<p>Insufficient Votes</p>'
+          } else {
+            document.getElementById('pd').innerHTML = `</h3><p><strong><em>No:</strong> ${precinct[0].properties["Percent No"]}%</strong></em><em> (${precinct[0].properties["Total Field"]})</em></p>`
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
+
