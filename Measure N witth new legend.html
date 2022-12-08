@@ -143,34 +143,13 @@
         // make a pointer cursor
         map.getCanvas().style.cursor = 'default';
 
-      //  map.legendControl.addLegend(document.getElementById('legend').innerHTML);
-
-        // create legend
-      // const legend = document.getElementById('legend');
-
-      //  layers.forEach((layer, i) => {
-      // const color = colors[i];
-      //   const item = document.createElement('div');
-      //   const key = document.createElement('span');
-      //   key.className = 'legend-span';
-      //   key.style.backgroundColor = color;
-
-       //   const value = document.createElement('span');
-       //   value.innerHTML = `${layer}`;
-       //   item.appendChild(key);
-       //   item.appendChild(value);
-       //   legend.appendChild(item);
-       // });
-
         // change info window on hover
         map.on('mousemove', (event) => {
           const precinct = map.queryRenderedFeatures(event.point, {
             layers: ['precints-for-measures-with-ov-9z123k']
           });
           console.log(precinct)
-          // document.getElementById('pd').innerHTML = precinct.length
-          // ? `</h3><p><strong><em>${precinct[0].properties["Percent No Votes"]}%</strong> No </em><strong><em>(${precinct[0].properties["Total Votes"]}</strong>)</em></p>`
-          //     :'<p>Precinct Level Results</p>';
+     
           if (! precinct.length){
             document.getElementById('pd').innerHTML = 
             '<p>Hover over a precinct for precinct level results</p>'
