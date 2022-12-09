@@ -107,7 +107,7 @@
   <body>
     <div id="map"></div>
     <div class="map-overlay-left" id="features">
-      <h2>District 3 Supervisor Election Map 2022</h2>
+      <h2>Measure N Election Map 2022</h2>
       <div id="pd"><p>Hover over a precinct for precinct level results</p></div>
     </div>
 
@@ -124,9 +124,9 @@
         <span style='background:#6af1d2;'></span>
         <span style='background:#05bda1;'></span>
         <label>60- 100%</label>
-        <label>52-59%</label>
+        <label>53-59%</label>
         <label>50% &#177 2%</label>
-        <label>52-59%</label>
+        <label>53-59%</label>
         <label>60- 100%</label>
         <small>Source: <u><a href="#https://www.votescount.us/">SCC Elections Department</U></a> </small>
         <small>Created by: Blaire Hobbs </small> 
@@ -155,6 +155,7 @@
                 id: 'Combined Precincts_Field2',
                 type: 'line',
                 source: 'composite',
+                "source-layer": 'Precints_For_Measures_With_Ov-9z123k',
                 paint: {
                     'line-color': "rgba(0, 0, 0, .7)",
                 }

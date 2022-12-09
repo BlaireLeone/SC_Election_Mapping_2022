@@ -1,5 +1,3 @@
-<div style="min-height:350px"></div>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,12 +16,12 @@
 
       h2 {
         font-size: 18px;
-        margin-bottom: 10px;
-        margin-top: 10px;
+        margin-bottom: 20px;
+        margin-top: 20px;
         margin-left: 20px}
 
       h3 {
-        margin: 10px;
+        margin: 20px;
         font-size: 18px;}
 
       h3 {
@@ -31,28 +29,30 @@
 
       p {
         margin-left: 20px;
-        margin-bottom: 0px;
+        margin-bottom: 5px;
         margin-top: 0px;}
 
-      #map {
+        #map {
         position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 60%;}
+        top: auto;
+        left: auto;
+        height: 100%;
+        width: 100%;
+      }
 
       .map-overlay-left {
-        position: absolute;
+        position: relative;
         top: auto;
         left: auto;
         background: #fff;
         margin-left: 10px;
         font-family: Arial, sans-serif;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-
-        border-radius: 10px;}
+        border-radius: 10px;
+      }
       
      .map-overlay-right {
-        position: absolute;
+        position: fixed;
         bottom: 20px;
         right: 20px;
         background: #fff;
@@ -61,33 +61,30 @@
         border-radius: 10px;
       }
       
-      #features {
-        top: 0;
-        height: 130px;
-        margin-top: 10px;
-        width: 300px;}
+     #features {
+      top: 0;
+      height: 130px;
+      margin-top: 10px;
+      width: 300px;
+    }
 
      #legend {
-      position: relative;
-      /* bottom: 10%;
-      right: 10%; */
-      bottom: 10px;
-      right: 10px;
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
       height: 130px;
       width: 260px;
-      margin: 20px;
       padding: 10px;
     }
 
-
-      .legend ref {
-        display:block;
-        float:left;
-        height:25px;
-        width:20%;
-        text-align:center;
-        font-size:14px;
-        color:#020202;
+     .legend ref {
+       display:block;
+       float:left;
+       height:25px;
+       width:20%;
+       text-align:center;
+       font-size:14px;
+       color:#020202;
       }
 
       .legend label,
@@ -107,29 +104,29 @@
   <body>
     <div id="map"></div>
     <div class="map-overlay-left" id="features">
-      <h2>District 3 Supervisor Election Map 2022</h2>
+      <h2>Measure N Election Map 2022</h2>
       <div id="pd"><p>Hover over a precinct for precinct level results</p></div>
     </div>
 
     <div class="map-overlay-right" id="legend">
       <nav class='legend clearfix'>
-        <ref><strong>Shebreh</strong></ref>
+        <ref><strong>No</strong></ref>
         <ref></ref>
         <ref><strong>Split</strong></ref>
         <ref></ref>
-        <ref><strong>Justin</strong></ref>
+        <ref><strong>Yes</strong></ref>
         <span style='background:#e8802c;'></span>
         <span style='background:#f2bd92;'></span>
         <span style='background:#f3f4b3;'></span>
         <span style='background:#6af1d2;'></span>
         <span style='background:#05bda1;'></span>
         <label>60- 100%</label>
-        <label>52-59%</label>
+        <label>53-59%</label>
         <label>50% &#177 2%</label>
-        <label>52-59%</label>
+        <label>53-59%</label>
         <label>60- 100%</label>
-        <small>Source: <u><a href="#https://www.votescount.us/">SCC Elections Department</U></a> </small>
-        <small>Created by: Blaire Hobbs </small> 
+        <small>Source: <a href="#https://www.votescount.us/">SCC Elections Department</a>
+        </small> <x-small>Created by: Blaire Hobbs </x-small> 
         </nav>
       </div>
     <script>
@@ -139,45 +136,34 @@
       // create map
       const map = new mapboxgl.Map({
         container: 'map', // container id
-        style: 'mapbox://styles/blaireleone/clbaah7z7000l14s2rw2j1zku', // map style URL from Mapbox Studio
-        center: [-122.1385389, 37.1001741], // starting position [lng, lat]
-        zoom: 10, // starting zoom
+        style: 'mapbox://styles/blaireleone/clb7ihumu000c15paygyf4d3j', // map style URL from Mapbox Studio
+        center: [-122.035000, 36.97800], // starting position [lng, lat]
+        zoom: 12, // starting zoom
       });
-
-      map.addControl(new mapboxgl.NavigationControl());
 
       // wait for map to load before adjusting it
       map.on('load', () => {
         // make a pointer cursor
         map.getCanvas().style.cursor = 'default';
 
-        map.addLayer({
-                id: 'Combined Precincts_Field2',
-                type: 'line',
-                source: 'composite',
-                paint: {
-                    'line-color': "rgba(0, 0, 0, .7)",
-                }
-            });
-
         // change info window on hover
         map.on('mousemove', (event) => {
           const precinct = map.queryRenderedFeatures(event.point, {
-            layers: ['3rd-supervisorial-district-4wseev']
+            layers: ['updated-measure-n-map-32kozg']
           });
           console.log(precinct)
      
           if (! precinct.length){
             document.getElementById('pd').innerHTML = 
             '<p>Hover over a precinct for precinct level results</p>'
-          } else if (precinct.length && precinct[0].properties["Total"] ==null) {
+          } else if (precinct.length && precinct[0].properties["Total Votes"] < 10) {
             document.getElementById('pd').innerHTML = 
             '<p>Insufficient Votes</p>'
           } else {
             document.getElementById('pd').innerHTML = 
-            `</h3><p><strong><em>Justin:</strong> ${precinct[0].properties["Percent Justin"]}% </em> <strong><em></p>
-              \n</h3><p>Shebreh:</strong> ${precinct[0].properties["Percent Shebreh"]}%</em></p>
-              \n</h3><p><strong><em>Total Votes:</strong> ${precinct[0].properties["Total"]}</em></p>`
+            `</h3><p><strong><em>No:</strong> ${precinct[0].properties["Percent No Votes"]}% </em> <strong><em></p>
+              \n</h3><p>Yes:</strong> ${precinct[0].properties["Percent Yes Votes"]}%</em></p>
+              \n</h3><p><strong><em>Total Votes:</strong> ${precinct[0].properties["Total Votes"]}</em></p>`
           } 
         });
       });
