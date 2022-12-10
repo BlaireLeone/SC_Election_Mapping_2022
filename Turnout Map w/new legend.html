@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"> 
+  <head>
+    <meta charset="utf-8" />
+    <title>General Election Turnout Map 2022</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <style>
+       body {
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        font-size: 18px;
+        margin-bottom: 0px;
+        margin-left: 20px;
+        margin-top: 5px;
+      }
+
+      h3 {
+        margin: 10px;
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      h3 {
+        font-size: 16px;
+      }
+
+      p {
+        margin-bottom: 10px;
+        text-align:center;
+        margin-top: 10px;
+      }
+
+      #map {
+        position: absolute;
+        top: 0px;
+        left: auto;
+        height: 100%;
+        width: 100%;
+      }
+
+      .map-overlay-left {
+        position: relative;
+        top: 10px;
+        left: auto;
+        background: #fff;
+        margin-top: 10px;
+        margin-left: 10px;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        border-radius: 10px 10px 10px 10px;
+        padding: 10px;
+      }
+      
+     #features {
+      top: 0;
+      height: 140px;
+      width: 350px;
+    }
+
+     .features ref {
+       display:block;
+       float:left;
+       height:25px;
+       width:10%;
+       text-align:center;
+       font-size:14px;
+       color:#020202;
+      }
+
+      .features label,
+      .features span {
+        display:block;
+        float:left;
+        height:15px;
+        width:10%;
+        text-align:center;
+        font-size:9px;
+        color:#808080;} 
+      
+
+    </style>
+  </head>
+
+  <body>
+    <div id="map"></div>
+    <div class="map-overlay-left" id="features">
+      <h2>General Election Turnout Map 2022</h2>
+      <div id="pd"><p>Hover over a precinct for precinct level results</p></div>
+      <nav class='features clearfix'>
+        <span style='background:#c3d883;'></span>
+        <span style='background:#fcfcbe;'></span>
+        <span style='background:#fdc78d;'></span>
+        <span style='background:#fb8d67;'></span>
+        <span style='background:#e45563;'></span>
+        <span style='background:#ac337b;'></span>
+        <span style='background:#6b1f7b;'></span>
+        <span style='background:#2c1160;'></span>
+        <span style='background:#3d39a7;'></span>
+        <span style='background:#7c97de;'></span>
+        <label>10%</label>
+        <label>20%</label>
+        <label>30%</label>
+        <label>40%</label>
+        <label>50%</label>
+        <label>60%</label>
+        <label>70%</label>
+        <label>80%</label>
+        <label>90%</label>
+        <label>100%</label>
+        <small>Source: <u><a href="#https://www.votescount.us/">SCC</a></u></small> 
+        <small>Created by: Blaire Hobbs </small> 
+        </nav>
+      </div>
+    <script>
+
+      mapboxgl.accessToken = 'pk.eyJ1IjoiYmxhaXJlbGVvbmUiLCJhIjoiY2xiMWR1NGZkMDc0cTNwcWZ2OGNib2hvOCJ9.C4dyqxXx0I6lmVRK_HdmMQ';
+
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/blaireleone/clbh03bi4000816lhbiltm2aq',
+        center: [-121.945429, 37.063234],
+        zoom: 9.8, 
+        
+      });
+
+      map.addControl(new mapboxgl.NavigationControl());
+
+
+
+      map.on('load', () => {
+
+        map.getCanvas().style.cursor = 'default';
+
+        map.on('mousemove', (event) => {
+          const precinct = map.queryRenderedFeatures(event.point, {
+            layers: ['final-turnout-map-w-condition-7fsyxx']
+          }); 
+     
+          if (! precinct.length){
+            document.getElementById('pd').innerHTML = 
+            '<p>Hover over a precinct for precinct level results</p>'
+          } else if (precinct.length && precinct[0].properties["Final Turnout_Total Registered"] == null) {
+            document.getElementById('pd').innerHTML = 
+            '<p>Insufficient Votes</p>'
+          } else {
+            document.getElementById('pd').innerHTML = 
+            `</h3><p>Turnout Percentage: ${precinct[0].properties["Final Turnout_% Turnout"]}% </p>
+              \n</h3><p>Total Registered: ${precinct[0].properties["Final Turnout_Total Registered"]}</p>`
+          } 
+        });
+      });
+    </script>
+  </body>
+</html>
