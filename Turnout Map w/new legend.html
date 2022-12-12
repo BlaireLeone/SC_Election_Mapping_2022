@@ -40,7 +40,7 @@
 
       #map {
         position: absolute;
-        top: 0px;
+        bottom: 0px;
         left: auto;
         height: 100%;
         width: 100%;
@@ -48,7 +48,7 @@
 
       .map-overlay-left {
         position: relative;
-        top: 10px;
+        bottom: 10px;
         left: auto;
         background: #fff;
         margin-top: 10px;
@@ -131,8 +131,8 @@
         
       });
 
-      map.addControl(new mapboxgl.NavigationControl());
-
+      map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
+ 
 
 
       map.on('load', () => {
@@ -152,7 +152,7 @@
             '<p>Insufficient Votes</p>'
           } else {
             document.getElementById('pd').innerHTML = 
-            `</h3><p>Turnout Percentage: ${precinct[0].properties["Final Turnout_% Turnout"]}% </p>
+            `</h3><p>Turnout Percentage: ${precinct[0].properties["% Turnout w/condition"]}% </p>
               \n</h3><p>Total Registered: ${precinct[0].properties["Final Turnout_Total Registered"]}</p>`
           } 
         });
