@@ -2,6 +2,7 @@
 <html lang="en"> 
   <head>
     <meta charset="utf-8" />
+    <title>General Election Turnout Map 2022</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
     <link
@@ -14,8 +15,8 @@
         padding: 0;
       }
 
- h3 {
-        margin: 5px;
+      h3 {
+        margin: 10px;
         font-size: 18px;
         margin-bottom: 10px;
       }
@@ -25,10 +26,10 @@
       }
 
       p {
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         text-align:center;
-        margin-top: 5px;
-        }
+        margin-top: 10px;
+      }
 
       #map {
         position: absolute;
@@ -37,6 +38,7 @@
         height: 100%;
         width: 100%;
       }
+
       .map-overlay-left {
         position: relative;
         top: 10px;
@@ -48,24 +50,23 @@
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         border-radius: 10px 10px 10px 10px;
         padding: 10px;
-        }
+      }
       
      #features {
       top: 0;
-      height: 150px;
+      height: 130px;
       min-width: 150px;
-      max-width: 320px;
+      max-width: 350px;
       width:80%     
     }
 
      .features ref {
+       display:block;
        float:left;
        height:25px;
-       width:33%;
+       width:10%;
        text-align:center;
-       vertical-align: bottom;
        font-size:14px;
-       margin-bottom: 10px;
        color:#020202;
       }
 
@@ -74,11 +75,10 @@
         display:block;
         float:left;
         height:15px;
-        width:20%;
+        width:10%;
         text-align:center;
         font-size:9px;
-        color:#808080;
-        } 
+        color:#808080;} 
       
 
     </style>
@@ -87,23 +87,29 @@
   <body>
     <div id="map"></div>
     <div class="map-overlay-left" id="features">
-      
-        <div id="pd"><p><p><strong>District 3 Supervisor Results </strong></p><p>Hover over a precinct!</p></div>
+        <div id="pd"><p><strong>General Election Turnout </strong></p> <p>Hover over a precinct!</p></div>
       <nav class='features clearfix'>
-      <ref>Kalantari-Johnson</ref>
-      <ref><br>Split</br></ref>
-      <ref><br>Cummings</br></ref>
-      <span style='background:#e8802c;'></span>
-      <span style='background:#f2bd92;'></span>
-      <span style='background:#f3f4b3;'></span>
-      <span style='background:#6af1d2;'></span>
-      <span style='background:#05bda1;'></span>
-      <label>60- 100%</label>
-      <label>52-60%</label>
-      <label>50% &#177 2%</label>
-      <label>52-60%</label>
-      <label>60- 100%</label>
-      <small>Source: <u><a href="#https://www.votescount.us/">SCC</a></u></small> 
+        <span style='background:#c3d883;'></span>
+        <span style='background:#fcfcbe;'></span>
+        <span style='background:#fdc78d;'></span>
+        <span style='background:#fb8d67;'></span>
+        <span style='background:#e45563;'></span>
+        <span style='background:#ac337b;'></span>
+        <span style='background:#6b1f7b;'></span>
+        <span style='background:#2c1160;'></span>
+        <span style='background:#3d39a7;'></span>
+        <span style='background:#7c97de;'></span>
+        <label>10%</label>
+        <label>20%</label>
+        <label>30%</label>
+        <label>40%</label>
+        <label>50%</label>
+        <label>60%</label>
+        <label>70%</label>
+        <label>80%</label>
+        <label>90%</label>
+        <label>100%</label>
+        <small>Source: <u><a href="#https://www.votescount.us/">SCC</a></u></small> 
         <small>Created by: Blaire Hobbs </small> 
         </nav>
       </div>
@@ -113,9 +119,9 @@
 
       const map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/blaireleone/clbaah7z7000l14s2rw2j1zku',
-        center: [-122.1385389, 37.1301741],
-        zoom: 10,
+        style: 'mapbox://styles/blaireleone/clbh03bi4000816lhbiltm2aq',
+        center: [-121.945429, 37.123234],
+        zoom: 9.2, 
         
       });
 
@@ -129,19 +135,19 @@
 
         map.on('mousemove', (event) => {
           const precinct = map.queryRenderedFeatures(event.point, {
-            layers: ['3rd-supervisorial-district-4wseev']
+            layers: ['final-turnout-map-w-condition-7fsyxx']
           }); 
      
-            if (! precinct.length){
+          if (! precinct.length){
             document.getElementById('pd').innerHTML = 
-            '<p><strong>District 3 Supervisor Results</strong></p> <p>Hover over a precinct!</p>'
-          } else if (precinct.length && precinct[0].properties["Total"] == null) {
+            '<p><strong>General Election Turnout </strong></p><p>Hover over a precinct!</p>'
+          } else if (precinct.length && precinct[0].properties["Final Turnout_Total Registered"] == null) {
             document.getElementById('pd').innerHTML = 
-            ' <p><em>Grey indicates precincts with 20</p> <p> or fewer registered voters</em>'
+            '<p><em>Grey indicates precincts with 20</p> <p> or fewer registered voters</em>'
           } else {
             document.getElementById('pd').innerHTML = 
-            `</h3><p><strong><em>Cummings:</strong> ${precinct[0].properties["Percent Justin"]}% </em> <strong><em></p> </h3><p>Kalantari-Johnson:</strong> ${precinct[0].properties["Percent Shebreh"]}%</em></p>
-              \n</h3><p><strong><em>Total Votes:</strong> ${precinct[0].properties["Total"]}</em></p>`
+            `</h3><p><strong>Turnout Percentage:</strong> ${precinct[0].properties["% Turnout w/condition"]}% </p>
+              \n</h3><p><strong>Total Registered:</strong> ${precinct[0].properties["Final Turnout_Total Registered"]}</p>`
           } 
         });
       });

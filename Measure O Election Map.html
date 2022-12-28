@@ -1,13 +1,5 @@
-<!-- <iframe 
-  width='100%' 
-  height='380px'      
-  src="https://api.mapbox.com/styles/v1/blaireleone/clb7ihumu000c15paygyf4d3j.html?title=false&access_token=pk.eyJ1IjoiYmxhaXJlbGVvbmUiLCJhIjoiY2xiMWR1NGZkMDc0cTNwcWZ2OGNib2hvOCJ9.C4dyqxXx0I6lmVRK_HdmMQ&zoomwheel=false#12.03/36.98719/-122.00858" 
-    title="Measure N Election Results-linear colors" 
-    style="border:none;"></iframe> -->
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
   <head>
     <meta charset="utf-8" />
     <title>Measure O Election Map 2022</title>
@@ -18,134 +10,141 @@
       rel="stylesheet"
     />
     <style>
-      body {
+       body {
         margin: 0;
         padding: 0;
       }
-      h2,
-      h3 {
+
+ h3 {
         margin: 10px;
         font-size: 18px;
+        margin-bottom: 10px;
       }
+
       h3 {
-        font-size: 16px;
+        font-size: 14px;
       }
+
       p {
-        margin: 10px;
-      }
+        margin-bottom: 5px;
+        text-align:center;
+        margin-top: 10px;
+        }
+
       #map {
         position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 60%;
+        top: 0px;
+        left: auto;
+        height: 100%;
+        width: 100%;
       }
-        .map-overlay {
-        position: absolute;
-        top: auto;
+      .map-overlay-left {
+        position: relative;
+        top: 10px;
         left: auto;
         background: #fff;
-        margin-left: 10px;
         margin-top: 10px;
+        margin-left: 10px;
         font-family: Arial, sans-serif;
-        overflow: auto;
-        border-radius: 3px;
-      }
-      #features {
-        top: 0;
-        height: 100px;
-        margin-top: 20px;
-        width: 340px;
-      }
-      #legend {
-        position: relative;
-        top: 50%;
-        left: 50%;
-        padding: 10px;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        line-height: 25px;
-        height: 70px;
-        margin-bottom: 40px;
-        width: 220px;
+        border-radius: 10px 10px 10px 10px;
+        padding: 10px;
+        }
+      
+     #features {
+      top: 0;
+      height: 130px;
+      min-width: 150px;
+      max-width: 300px;
+      width:80%     
+    }
+
+     .features ref {
+       display:block;
+       float:left;
+       height:25px;
+       width:20%;
+       text-align:center;
+       font-size:14px;
+       color:#020202;
       }
-      .legend-key {
-        display: inline-block;
-        border-radius: 20%;
-        width: 10px;
-        height: 10px;
-        margin-right: 5px;
-      }
+
+      .features label,
+      .features span {
+        display:block;
+        float:left;
+        height:15px;
+        width:20%;
+        text-align:center;
+        font-size:9px;
+        color:#808080;
+        } 
+      
+
     </style>
   </head>
+
   <body>
     <div id="map"></div>
-    <div class="map-overlay" id="features">
-      <h2>Measure O Election Map 2022</h2>
-      <div id="pd"><p>   Precinct Level Results</p></div>
-    </div>
-    <div class="map-overlay" id="legend"></div>
-
+    <div class="map-overlay-left" id="features">
+      
+      <div id="pd"><p><p><strong>Measure O Election Results </strong></p><p>Hover over a precinct!</p></div>
+      <nav class='features clearfix'>
+      <ref>No</ref>
+      <ref></ref>
+      <ref>Split</ref>
+      <ref></ref>
+      <ref>Yes</ref>
+      <span style='background:#e8802c;'></span>
+      <span style='background:#f2bd92;'></span>
+      <span style='background:#f3f4b3;'></span>
+      <span style='background:#6af1d2;'></span>
+      <span style='background:#05bda1;'></span>
+      <label>60- 100%</label>
+      <label>52-60%</label>
+      <label>50% &#177 2%</label>
+      <label>52-60%</label>
+      <label>60- 100%</label>
+      <small>Source: <u><a href="#https://www.votescount.us/">SCC</a></u></small> 
+        <small>Created by: Blaire Hobbs </small> 
+        </nav>
+      </div>
     <script>
-      // define access token
+
       mapboxgl.accessToken = 'pk.eyJ1IjoiYmxhaXJlbGVvbmUiLCJhIjoiY2xiMWR1NGZkMDc0cTNwcWZ2OGNib2hvOCJ9.C4dyqxXx0I6lmVRK_HdmMQ';
 
-      // create map
       const map = new mapboxgl.Map({
-        container: 'map', // container id
-        style: 'mapbox://styles/blaireleone/clb9y4miu001y14t4ivtjr7ef', // map style URL from Mapbox Studio
-        center: [-122.035000, 36.97800], // starting position [lng, lat]
-        zoom: 12, // starting zoom
+        container: 'map',
+        style: 'mapbox://styles/blaireleone/clbg0l2aa000714un4atdr6uu',
+        center: [-122.035000, 36.98800],
+        zoom: 12, 
+        
       });
 
-      // wait for map to load before adjusting it
+      map.addControl(new mapboxgl.NavigationControl(),'bottom-left');
+
+
+
       map.on('load', () => {
-        // make a pointer cursor
+
         map.getCanvas().style.cursor = 'default';
 
-        // set map bounds to the continental US
-        //map.fitBounds([
-          //[6145000, 6103800],
-          //[1808684.8842604, 1826070.84423906] ]);
-
-        // define layer names
-        const layers = [
-          '<strong>No:</strong> 59.52% (14145)', 
-          '<strong>Yes:</strong> 40.48% (9622)',
-        ];
-        const colors = [
-          '#d115b1',
-          '#13b916',
-        ];
-
-        // create legend
-        const legend = document.getElementById('legend');
-
-        layers.forEach((layer, i) => {
-          const color = colors[i];
-          const item = document.createElement('div');
-          const key = document.createElement('span');
-          key.className = 'legend-key';
-          key.style.backgroundColor = color;
-
-          const value = document.createElement('span');
-          value.innerHTML = `${layer}`;
-          item.appendChild(key);
-          item.appendChild(value);
-          legend.appendChild(item);
-        });
-
-        // change info window on hover
         map.on('mousemove', (event) => {
           const precinct = map.queryRenderedFeatures(event.point, {
-            layers: ['measure-o-precinct-map-ba5mgr']
-          });
-          console.log(precinct[0].properties["Measure O_Total"])
-          if (! precinct.length){
-            document.getElementById('pd').innerHTML = '<p>Precinct Level Results</p>'
-          } else if (precinct.length && precinct[0].properties["Measure O_Total"] == null) {
-            document.getElementById('pd').innerHTML = '<p>Insufficient Turnout</p>'
+            layers: ['updated-measure-o-map-7q5976']
+          }); 
+     
+            if (! precinct.length){
+            document.getElementById('pd').innerHTML = 
+            '<p><strong>Measure O Election Results</strong></p> <p>Hover over a precinct!</p>'
+          } else if (precinct.length && precinct[0].properties["Total Votes"] == null) {
+            document.getElementById('pd').innerHTML = 
+            ' <p><em>Grey indicates precincts with 20</p> <p> or fewer registered voters </em>'
           } else {
-            document.getElementById('pd').innerHTML = `</h3><p><strong><em>No:</strong> ${precinct[0].properties["Measure O_Percent No"]}%</strong></em><em> (${precinct[0].properties["Measure O_Total"]})</em></p>`
-          }
+            document.getElementById('pd').innerHTML = 
+            `</h3><p><strong><em>No:</strong> ${precinct[0].properties["Percent No"]}% </em> <strong><em> / </h3>Yes:</strong> ${precinct[0].properties["Measure O Updated_Percent Yes"]}%</em></p>
+              \n</h3><p><strong><em>Total Votes:</strong> ${precinct[0].properties["Total Votes"]}</em></p>`
+          } 
         });
       });
     </script>
