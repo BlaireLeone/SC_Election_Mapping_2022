@@ -1,6 +1,6 @@
 # SC_Election_Mapping_2022
 
-<img src="https://cms.lookout.co/_preview?_cms.db.previewId=00000185-07fd-da20-afed-1ffdc0d80000&_date=" style= "height=60; width=60" >  
+<iframe width='100%' height='650px' src="https://cms.lookout.co/_preview?_cms.db.previewId=00000185-07fd-da20-afed-1ffdc0d80000&_date=" title="Measure O Election Map" style="border:none;"></iframe>
 
 This is a repo with 2022 midterm election maps from Santa Cruz County created for Lookout Santa Cruz, a digital newsroom covering Santa Cruz County, California. Maps can be found [here](https://lookout.co/santacruz/election-2022/story/2022-12-09/santa-cruz-how-did-your-neighborhood-vote-in-these-three-2022-races) and [here](https://lookout.co/santacruz/election-2022/story/2022-11-28/voter-turnout-fell-by-10-points-in-santa-cruz-county-and-more-in-surrounding-counties). The election results data were provided by the [Santa Cruz County Elections Department](https://www.votescount.us/). Throughout the mapping process, I communicated with the Clerk's office to resolve discrepancies apparent after analysis, such as understanding the difference between registration and voting precincts and clarifying same day registration vote counts. These were the steps I followed:
 
